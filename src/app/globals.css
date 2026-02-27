@@ -1,26 +1,106 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-outfit: var(--font-outfit);
+}
+
+/* ========================================
+   ROOT THEME
+======================================== */
+html {
+  scroll-behavior: smooth;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07070a;
+  --foreground: #f4f4f5;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ========================================
+   BODY BASE
+======================================== */
 body {
+  margin: 0;
+  min-height: 100vh;
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ========================================
+   PREMIUM ANIMATED MESH BACKGROUND
+======================================== */
+.luxury-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Base cinematic gradient */
+.luxury-mesh::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, #ff3c00 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, #ff0066 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, #ff8c00 0%, transparent 55%),
+    radial-gradient(circle at 30% 70%, #ff004c 0%, transparent 50%);
+  filter: blur(120px);
+  opacity: 0.6;
+  animation: meshMove 20s ease-in-out infinite alternate;
+}
+
+/* Deep ambient glow layer */
+.luxury-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 60% 40%, rgba(255, 0, 120, 0.4), transparent 60%),
+    radial-gradient(circle at 40% 60%, rgba(255, 80, 0, 0.4), transparent 60%);
+  filter: blur(180px);
+  opacity: 0.4;
+  animation: meshMoveReverse 25s ease-in-out infinite alternate;
+}
+
+/* Smooth Floating Animation */
+@keyframes meshMove {
+  0% {
+    transform: scale(1) translate(0px, 0px);
+  }
+  50% {
+    transform: scale(1.1) translate(40px, -60px);
+  }
+  100% {
+    transform: scale(1.05) translate(-40px, 60px);
+  }
+}
+
+@keyframes meshMoveReverse {
+  0% {
+    transform: scale(1) translate(0px, 0px);
+  }
+  50% {
+    transform: scale(1.15) translate(-60px, 40px);
+  }
+  100% {
+    transform: scale(1.05) translate(60px, -40px);
+  }
+}
+
+/* ========================================
+   OPTIONAL: SUBTLE NOISE TEXTURE
+======================================== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.04;
 }
